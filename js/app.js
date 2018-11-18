@@ -5,11 +5,28 @@ var app = {
     version : '1.0.0',
     targetEvent : 'click',
     isCordova   : false,
+    isEmailAvailable : false,
 
+
+    sendEmail : function () {
+        if (app.isEmailAvailable) {
+            cordova.plugins.email.open({
+                to:      'jesse650@gmail.com',
+                subject: 'Test of HTML email',
+                body:    '<h1>Nice greetings from Leipzig</h1>',
+                isHtml:  true
+            });
+        } else {
+            console.log('No email available.');
+            document.getElementById('test').innerHTML = 'No email available.';
+        }
+    },
+    //
     hook : function () {
         document.getElementById('shareButton').addEventListener(app.targetEvent, function () {
             console.log('#shareButton');
             document.getElementById('test').innerHTML = '#shareButton';
+            app.sendEmail();
         });
     },
     //
@@ -32,7 +49,7 @@ var app = {
         app.isCordova   = (typeof window.cordova !== "undefined");
         //
         cordova.plugins.email.isAvailable(function (isAvailable) {
-            document.getElementById('mailPlugin').innerHTML = isAvailable;
+            document.getElementById('mailPlugin').innerHTML = app.isEmailAvailable = isAvailable;
         });
     }
 };
