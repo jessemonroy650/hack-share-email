@@ -12,9 +12,14 @@ var app = {
         if (app.isEmailAvailable) {
             cordova.plugins.email.open({
                 to:      'jesse650@gmail.com',
-                subject: 'Test of HTML email',
+                subject: 'Test of HTML email & files (img+text)',
                 body:    '<h1>Nice greetings from Leipzig</h1>',
-                isHtml:  true
+                isHtml:  true,
+                attachments: [
+                    'file://img/apple.png',
+                    'file://img/bellpepper.png',
+                    'file://css/app.css'
+                ]
             });
         } else {
             console.log('No email available.');
