@@ -25,6 +25,7 @@ var app = {
         app.isCordova   = (typeof window.cordova !== "undefined");
         //
         app.hook();
+        shareEmail.init('mailStatus');
     },
     //
     onDeviceReady : function () {
@@ -33,7 +34,7 @@ var app = {
 
         app.targetEvent = 'touchend';
         app.isCordova   = (typeof window.cordova !== "undefined");
-        shareEmail.init('mailStatus');
+        //shareEmail.init('mailStatus');
         //
         cordova.plugins.email.isAvailable(function (isAvailable) {
             document.getElementById('mailPlugin').innerHTML = shareEmail.isEmailAvailable = isAvailable;
