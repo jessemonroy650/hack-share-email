@@ -31,7 +31,7 @@ var app = {
         app.targetEvent = 'touchend';
         app.isCordova   = (typeof window.cordova !== "undefined");
         //
-        email.isAvailable(function (isAvailable) {
+        cordova.plugins.email.isAvailable(function (isAvailable) {
             document.getElementById('mailPlugin').innerHTML = isAvailable;
         });
     }
