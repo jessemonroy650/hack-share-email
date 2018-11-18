@@ -7,7 +7,11 @@ var app = {
     isCordova   : false,
     isEmailAvailable : false,
 
-
+    //
+    emailDismissed : function (x) {
+        document.getElementById('mailStatus').innerHTML = 'email dismissed:' + x;
+    },
+    //
     sendEmail : function () {
         if (app.isEmailAvailable) {
             cordova.plugins.email.open({
@@ -20,7 +24,7 @@ var app = {
                     'file://img/bellpepper.png',
                     'file://css/app.css'
                 ]
-            });
+            }, app.emailDismissed);
         } else {
             console.log('No email available.');
             document.getElementById('test').innerHTML = 'No email available.';
