@@ -11,8 +11,8 @@ var app = {
             console.log('#shareButton');
             document.getElementById('test').innerHTML       = '#shareButton';
             document.getElementById('mailStatus').innerHTML = 'Getting email app ...';
-            
-            shareEmail.sendEmail();
+            // use a short timeout, otherwise text does not display
+            setTimeout(shareEmail.sendEmail, 200);
         });
     },
     //
