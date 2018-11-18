@@ -5,37 +5,14 @@ var app = {
     version : '1.0.0',
     targetEvent : 'click',
     isCordova   : false,
-    isEmailAvailable : false,
-
-    //
-    emailDismissed : function (x) {
-        document.getElementById('mailStatus').innerHTML = 'email dismissed:' + x;
-    },
-    //
-    sendEmail : function () {
-        if (app.isEmailAvailable) {
-            cordova.plugins.email.open({
-                to:      'jesse650@gmail.com',
-                subject: 'Test of HTML email & files (img+text)',
-                body:    '<h1>Nice greetings from Leipzig</h1>',
-                isHtml:  true,
-                attachments: [
-                    'file://img/apple.png',
-                    'file://img/bellpepper.png',
-                    'file://css/app.css'
-                ]
-            }, app.emailDismissed);
-        } else {
-            console.log('No email available.');
-            document.getElementById('test').innerHTML = 'No email available.';
-        }
-    },
     //
     hook : function () {
         document.getElementById('shareButton').addEventListener(app.targetEvent, function () {
             console.log('#shareButton');
-            document.getElementById('test').innerHTML = '#shareButton';
-            app.sendEmail();
+            document.getElementById('test').innerHTML       = '#shareButton';
+            document.getElementById('mailStatus').innerHTML = 'Getting email app ...';
+            
+            shareEmail.sendEmail();
         });
     },
     //
@@ -56,9 +33,10 @@ var app = {
 
         app.targetEvent = 'touchend';
         app.isCordova   = (typeof window.cordova !== "undefined");
+        shareEmail.init('mailStatus');
         //
         cordova.plugins.email.isAvailable(function (isAvailable) {
-            document.getElementById('mailPlugin').innerHTML = app.isEmailAvailable = isAvailable;
+            document.getElementById('mailPlugin').innerHTML = shareEmail.isEmailAvailable = isAvailable;
         });
     }
 };
