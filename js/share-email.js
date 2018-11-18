@@ -2,37 +2,31 @@
 //
 //
 var shareEmail = {
-    version : '0.8.0',
+    version : '0.8.6',
     isEmailAvailable : false,
     messageSpan : '',
+    emailBlob   : {},
 
-    init : function (messageSpan) {
+    init : function (messageSpan, blob) {
         shareEmail.messageSpan = messageSpan;
+        shareEmail.emailBlob   = blob;
     },
     //
     emailDismissed : function (x) {
-        document.getElementById(shareEmail.messageSpan).innerHTML = 'email dismissed:' + x;
-    },
-    //
-    sendEmail : function () {
-        if (shareEmail.isEmailAvailable) {
-            cordova.plugins.email.open({
-                to:      'jesse650@gmail.com',
-                subject: 'Test of HTML email & files (img+text)',
-                body:    '<h1>Nice greetings from Leipzig</h1>',
-                isHtml:  true,
-                attachments: [
-                    'file://img/apple.png',
-                    'file://img/bellpepper.png',
-                    'file://css/app.css'
-                ]
-            }, shareEmail.emailDismissed);
-        } else {
-            console.log('No email available.');
-            document.getElementById(shareEmail.messageSpan).innerHTML = 'No email available.';
+        if (shareEmail.messageSpan) {
+            document.getElementById(shareEmail.messageSpan).innerHTML = x;
         }
     },
-
-
-
-}
+    //
+    sendEmail : function (emailBlob) {
+        if (shareEmail.isEmailAvailable) {
+            emailBlob = (emailBlob) ? emailBlob : shareEmail.emailBlob;
+            cordova.plugins.email.open(emailBlob, shareEmail.emailDismissed);
+        } else {
+            console.log('No email available.');
+            if (shareEmail.messageSpan) {
+                document.getElementById(shareEmail.messageSpan).innerHTML = 'No email available.';
+            }
+        }
+    }
+};

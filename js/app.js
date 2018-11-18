@@ -5,6 +5,17 @@ var app = {
     version : '1.0.0',
     targetEvent : 'click',
     isCordova   : false,
+    emailBlob   : {to:      'jesse650@gmail.com',
+                   subject: 'Test of HTML email & files (img+text)',
+                   body:    '<h1>Nice greetings from Leipzig</h1>',
+                   isHtml:  true,
+                   attachments: [
+                       'file://img/apple.png',
+                       'file://img/bellpepper.png',
+                       'file://css/app.css'
+                   ]
+                  },
+
     //
     hook : function () {
         document.getElementById('shareButton').addEventListener(app.targetEvent, function () {
@@ -25,15 +36,15 @@ var app = {
         app.isCordova   = (typeof window.cordova !== "undefined");
         //
         app.hook();
-        shareEmail.init('mailStatus');
+        shareEmail.init('mailStatus', app.emailBlob);
     },
     //
     onDeviceReady : function () {
         document.getElementById('appIcon').src    = 'img/apple.png';
         document.getElementById('test').innerHTML = 'app.onDeviceReady';
 
-        app.targetEvent = 'touchend';
-        app.isCordova   = (typeof window.cordova !== "undefined");
+        app.targetEvent                           = 'touchend';
+        app.isCordova                             = (typeof window.cordova !== "undefined");
         //shareEmail.init('mailStatus');
         //
         cordova.plugins.email.isAvailable(function (isAvailable) {
